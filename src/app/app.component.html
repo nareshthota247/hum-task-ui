@@ -1,0 +1,59 @@
+<div class="container center-box">
+  <div>
+    <div [ngSwitch]="uiState">
+      <div *ngSwitchCase="UI_STATES.loading">
+        Loading...
+      </div>
+      <div *ngSwitchCase="UI_STATES.questionsLoaded">
+        <form [formGroup]="questionsForm" #queForm="ngForm" (ngSubmit)="onSubmit(queForm)">
+          <div class="questions" formArrayName="questionsForm">
+            <div class="dot__container">
+              <div class="dot" *ngFor="let question of questionsForm.controls.questionsForm.controls;let i = index;"
+                [ngClass]="{'active': currentQuestionIndex === i, 'completed': question.touched && question.valid}">
+              </div>
+            </div>
+            <div class="questions__container"
+              *ngIf="questionsForm.controls.questionsForm.controls[currentQuestionIndex] as currentQuestion">
+              <h3>
+                {{currentQuestion.controls.question.value}}
+              </h3>
+              <div class="options__container">
+                <p *ngFor="let option of currentQuestion.controls.options.controls; let optionIndex = index;">
+                  <label>
+                    <input [formControl]="currentQuestion.controls.answer" type="radio"
+                      [value]="option.controls.option.value" /> {{option.controls.description.value}}
+                  </label>
+                </p>
+              </div>
+              <div class="questions__footer">
+                <button type="button" [disabled]="currentQuestionIndex === 0"
+                  (click)="onPrevClickHandler()">Prev</button>
+                <button type="button"
+                  *ngIf="currentQuestionIndex !== questionsForm.controls.questionsForm.controls.length - 1"
+                  [disabled]="!(currentQuestion.valid)" (click)="onNextClickHandler()">Next</button>
+                <button type="submit"
+                  *ngIf="currentQuestionIndex === questionsForm.controls.questionsForm.controls.length - 1"
+                  [disabled]="!(currentQuestion.valid) || !navigator.onLine">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngSwitchCase="UI_STATES.formSubmitted" class="form-success-container">
+        <h3>
+          Thanks for submitting the questioner
+        </h3>
+        <p>{{formSuccessState.acquiredPoints}} / {{formSuccessState.totalPoints}}</p>
+        <p>{{formSuccessState.message}}</p>
+      </div>
+    </div>
+    <div *ngIf="!navigator.onLine; then offlineTemplate;"></div>
+  </div>
+
+</div>
+
+<ng-template #offlineTemplate>
+  <div class="error-container">
+    You are offline, please connect to the internet to submit the questions successfully.
+  </div>
+</ng-template>

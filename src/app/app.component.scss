@@ -1,0 +1,82 @@
+.center-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 100vh;
+}
+
+.questions {
+  // height: 300px;
+  width: 500px;
+  margin: auto;
+  &__container {
+    // text-align: center;
+    padding: 50px;
+  }
+  &__footer {
+    padding: 50px 0 0;
+    text-align: right;
+
+    button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      -webkit-appearance: none;
+      border: 1px solid #dddddd;
+      background: white;
+      color: #dddddd;
+      pointer-events: none;
+      outline: none;
+      border-radius: 3px;
+
+      &:not(:disabled) {
+        cursor: pointer;
+        pointer-events: all;
+        background: #6666ff;
+
+        &:active {
+          border-color: #6666ff;
+          background: white;
+          color: #6666ff;
+        }
+      }
+    }
+  }
+}
+.dot {
+  display: inline-block;
+  padding: 5px;
+  height: 5px;
+  width: 5px;
+  font-size: 11px;
+  border-radius: 50%;
+  margin-right: 5px;
+  background-color: #dddddd;
+
+  &__container {
+    margin: 10px 0px;
+    text-align: left;
+  }
+
+  &.completed {
+    background-color: #49bf49;
+  }
+
+  &.active {
+    background-color: #6666ff;
+  }
+}
+.form-success-container {
+  text-align: center;
+}
+.error-container {
+  color: white;
+  background-color: red;
+  padding: 10px;
+  border-radius: 3px;
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}
